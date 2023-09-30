@@ -1,0 +1,62 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+    <div>
+        <h1>Following</h1>
+        <div>
+            {% for post in page %}
+                <div class = "post">
+                    <a href="{% url 'profile' post.user %}"><b style = "font-size:26px; color:black;">{{ post.user }}</b><br></a>
+                    <div>
+                        <div>
+                            <div id="post-content-{{ post.id }}">{{ post.content }}</div>
+                        </div>
+
+                        <div>{{ post.created }}</div>
+                        <div style="font-size: 21px;">
+                            <button id="like-button-{{ post.id }}" class="like-button" data-post-id="{{ post.id }}" data-csrf="{{ csrf_token }}">&#10084;&#65039;</button>
+                            <b id="like-count-{{ post.id }}" class="like-count">{{ post.likes }}</b>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if page.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for page_num in page.paginator.page_range %}
+                    <li class="page-item {% if page_num == page.number %}active{% endif %}">
+                        <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.paginator.num_pages }}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+
+    </div>
+{% endblock %}

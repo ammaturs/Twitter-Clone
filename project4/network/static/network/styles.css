@@ -1,0 +1,14 @@
+.new-post{
+    border: 0.5px solid grey;
+    height:240px;
+    padding: 20px;
+    margin:10px;
+}
+
+.post{
+    border: 0.5px solid grey;
+    height:265px;
+    padding: 20px;
+    margin:10px;
+
+}
